@@ -30,89 +30,100 @@ Write your code in the `src/index.js` file. The base URL for your API will be
 
 ## Deliverables
 
-As a user, I can:
+// Get character bar and detailed info elements
+const characterBar = document.getElementById('character-bar');
+const detailedInfo = document.getElementById('detailed-info');
 
-1. See all characters names in a `div` with the id of `"character-bar"`. Create
-   a `span` tag with the character's name and add it the `div#character-bar`
-   once you have retrieved the character data from the server. You will need to
-   make a GET request to the following endpoint to retrieve the character data:
+// Function to create a character element
+function createCharacterElement(character) {
+  const characterElement = document.createElement('span');
+  characterElement.textContent = character.name;
+  characterElement.addEventListener('click', () => displayCharacterDetails(character));
+  return characterElement;
+}
 
-   ```txt
-   GET /characters
+// Function to display character details
+function displayCharacterDetails(character) {
+  detailedInfo.innerHTML = `
+    <p id="name">${character.name}</p>
+    <img id="image" src="${character.image}" alt="${character.name}" />
+    <h4>Total Votes: <span id="vote-count">${character.votes}</span></h4>
+    <form id="votes-form">
+      <input type="text" placeholder="Enter Votes" id="votes" name="votes" />
+      <input type="submit" value="Add Votes" />
+    </form>
+    <button id="reset-btn">Reset Votes</button>
+  `;
 
-   Example Response:
-   [
-    {
-      "id": 1,
-      "name": "Mr. Cute",
-      "image": "https://thumbs.gfycat.com/EquatorialIckyCat-max-1mb.gif",
-      "votes": 0
-    },
-    {
-      "id": 2,
-      "name": "Mr. Monkey",
-      "image": "https://thumbs.gfycat.com/FatalInnocentAmericanshorthair-max-1mb.gif",
-      "votes": 0
-    },
-    ...
-   ]
-   ```
+  // Add event listener to the votes form
+  const votesForm = document.getElementById('votes-form');
+  votesForm.addEventListener('submit', handleVotesFormSubmit);
 
-2. When the character in the `div#character-bar` is clicked, display the
-   character's details in the `div#detailed-info`. You can either use the
-   character information from your first request, or make a new request to this
-   endpoint to get the character's details:
+  // Add event listener to the reset button
+  const resetButton = document.getElementById('reset-btn');
+  resetButton.addEventListener('click', resetVotes);
+}
 
-   ```txt
-   GET /characters/:id
+// Function to handle form submission for adding votes
+function handleVotesFormSubmit(event) {
+  event.preventDefault();
+  const votesInput = document.getElementById('votes');
+  const votes = parseInt(votesInput.value, 10);
+  const voteCount = document.getElementById('vote-count');
+  voteCount.textContent = parseInt(voteCount.textContent, 10) + votes;
+  votesInput.value = '';
+}
 
-   Example Response:
-   {
-    "id": 1,
-    "name": "Mr. Cute",
-    "image": "https://thumbs.gfycat.com/EquatorialIckyCat-max-1mb.gif",
-    "votes": 0
-   }
-   ```
+// Function to reset votes
+function resetVotes() {
+  const voteCount = document.getElementById('vote-count');
+  voteCount.textContent = '0';
+}
 
-3. When the `form#votes-form` is submitted, add the number of votes from
-   the input field to the character displayed in the `div#detailed-info`. **No
-   persistence is needed**.
+// Function to fetch characters and display them
+function fetchAndDisplayCharacters() {
+  fetch('/characters')
+    .then(response => response.json())
+    .then(characters => {
+      characters.forEach(character => {
+        const characterElement = createCharacterElement(character);
+        characterBar.appendChild(characterElement);
+      });
+    });
+}
 
-### Bonus Deliverables
+// Add event listener to character form for bonus deliverable
+const characterForm = document.getElementById('character-form');
+if (characterForm) {
+  characterForm.addEventListener('submit', handleCharacterFormSubmit);
+}
 
-These bonus deliverables are here if you want an extra challenge and won't
-affect your score. **Make sure to commit your work to save your progress before
-attempting the bonus deliverables!**
+// Function to handle form submission for adding a new character
+function handleCharacterFormSubmit(event) {
+  event.preventDefault();
+  const nameInput = document.getElementById('name');
+  const imageInput = document.getElementById('image-url');
+  const character = {
+    name: nameInput.value,
+    image: imageInput.value,
+    votes: 0
+  };
 
-In the `index.html` file, there is some additional HTML that is currently
-commented out below the Reset Votes button. Remove the comments (delete the
-`<!--` and `-->` code around the elements) so you can complete the bonus
-deliverables.
+  // Add the new character to the character bar
+  const characterElement = createCharacterElement(character);
+  characterBar.appendChild(characterElement);
 
-1. When the Reset Votes button is clicked, reset the votes back to 0.
+  // Display the new character's details
+  displayCharacterDetails(character);
 
-2. When the `form#character-form` is submitted, add a new character to the
-   `div#character-bar`. The new character in the character bar should behave the
-   same as the other characters when clicked (its details should be displayed
-   below, and it should have functionality to add votes).
+  // Reset the form fields
+  nameInput.value = '';
+  imageInput.value = '';
+}
 
-3. In addition to adding the character to the `div#character-bar` upon
-   submitting the form, the character's details should show up immediately in
-   the `div#detailed-info`.
+// Fetch and display characters on page load
+fetchAndDisplayCharacters();
 
-### Extra Bonus
-
-These extra bonus deliverables involve using `fetch` to update data on the
-`json-server` backend by using `POST`, `PATCH`, and `DELETE` requests. These are
-meant for an extra, extra challenge and won't affect your grade. **Make sure to
-commit your work to save your progress before attempting the extra bonus
-deliverables!**
-
-1. When a user adds or resets the votes for a character, in addition to
-   displaying the updated votes on the page, the votes should **also** be
-   updated on the server. You will need to make a request that follows this
-   structure:
 
     ```txt
     PATCH /characters/:id
@@ -161,3 +172,4 @@ deliverables!**
       "votes": 0
     }
     ```
+# Flatacuties
