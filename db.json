@@ -4,31 +4,41 @@
       "id": 1,
       "name": "Mr. Cute",
       "image": "https://thumbs.gfycat.com/EquatorialIckyCat-max-1mb.gif",
-      "votes": 906
+      "votes": 915
     },
     {
       "id": 2,
       "name": "Mx. Monkey",
       "image": "https://thumbs.gfycat.com/FatalInnocentAmericanshorthair-max-1mb.gif",
-      "votes": 900
+      "votes": 911
     },
     {
       "id": 3,
       "name": "Ms. Zebra",
       "image": "https://media2.giphy.com/media/20G9uNqE3K4dRjCppA/source.gif",
-      "votes": 906
+      "votes": 911
     },
     {
       "id": 4,
       "name": "Dr. Lion",
       "image": "http://bestanimations.com/Animals/Mammals/Cats/Lions/animated-lion-gif-11.gif",
-      "votes": 902
+      "votes": 911
     },
     {
       "id": 5,
       "name": "Mme. Panda",
       "image": "https://media.giphy.com/media/ALalVMOVR8Qw/giphy.gif",
-      "votes": 900
+      "votes": 888
+    },
+    {
+      "image": "https://media.tenor.com/ijffyjt8WKYAAAAj/dog-twerk.gif",
+      "votes": 892,
+      "id": 6
+    },
+    {
+      "image": "https://media.tenor.com/Aq4nnClR37AAAAAj/nervous-dog-spinning.gif",
+      "votes": 892,
+      "id": 7
     }
   ]
 }
