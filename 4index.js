@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', ()=> { 
 const characters = document.getElementById('character-bar');
 const imageElement = document.getElementById('image');
 let currentId = 0;
@@ -20,6 +21,7 @@ const createCharacterElement = (character) => {
   const span = document.createElement('span');
   span.innerText = character.name;
   span.addEventListener('click', () => {
+
     displayCharacterData(character);
   });
   characters.appendChild(span);
@@ -54,7 +56,8 @@ const displayCharacterData = (character) => {
       });
   });
 
-  voteResetBtn.addEventListener('click', () => {
+  voteResetBtn.addEventListener('click', (event) => {
+    event.preventDefault();
     updateCharacterVotes(currentId, 0)
       .then(data => {
         voteCountElement.innerText = data.votes;
@@ -64,7 +67,8 @@ const displayCharacterData = (character) => {
       });
   });
 
-  removeCharacterBtn.addEventListener('click', () => {
+  removeCharacterBtn.addEventListener('click', (event) => {
+    event.preventDefault();
     removeCharacter(currentId)
       .then(() => {
         characters.removeChild(span);
@@ -113,7 +117,7 @@ const removeCharacter = async (characterId) => {
 const addCharacterForm = document.getElementById('character-form');
 addCharacterForm.addEventListener('submit', async (event) => {
   event.preventDefault();
-  const nameInput = document.getElementById('name');
+  const nameInput = document.querySelector('input#name');
   const imageInput = document.getElementById('image-url');
   const character = {
     name: nameInput.value,
@@ -150,3 +154,4 @@ const createCharacter = async (character) => {
 
 // Call the fetchCharactersData function to initiate the process
 fetchCharactersData();
+} )
